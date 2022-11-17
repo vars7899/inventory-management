@@ -6,12 +6,14 @@ import fs from "fs";
 import connectDB from "./db.js";
 import userRouter from "./routes/user.routes.js";
 import { errorHandler } from "./helperFunction/errorHandler.js";
+import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
 const app = express();
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,12 +33,6 @@ app.use(errorHandler);
 
 // Server casting
 app.listen(PORT, () => {
-  if (process.env.NODE_ENV === "development") {
-    console.log(
-      `Visit the link`.grey,
-      `\nhttps://127.0.0.1:${PORT}`.underline.blue
-    );
-  }
   console.log(
     `\nInventory Management Server is UP and Running on PORT --> (${PORT})`
       .green
