@@ -76,49 +76,45 @@ export const registerUser = ExpressAsyncHandler(async (req, res) => {
 // @route			/api/user
 // @access		public
 export const loginUser = ExpressAsyncHandler(async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    // check for required fields
-    if (!email || !password) {
-      res.status(400);
-      throw new Error("Missing required field(s) (Login user)");
-    }
-    // find user exist
-    const userExist = await User.findOne({ email });
-
-    // check if user exist and password match
-    if (!userExist || !(await userExist.matchPassword(password))) {
-      res.status(400);
-      throw new Error("Invalid email or password (Login User)");
-    }
-
-    const {
-      _id,
-      firstName,
-      lastName,
-      email: userEmail,
-      photo,
-      phone,
-      bio,
-    } = userExist;
-    const token = generateToken(userExist._id);
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), // expires in 1 day
-      sameSite: "none",
-      // secure: true,
-    });
-    res.status(200).json({
-      status: "success",
-      message: "User logged in successfully",
-      user: { _id, firstName, lastName, email: userEmail, photo, phone, bio },
-      token,
-    });
-  } catch (error) {
-    throw new Error("Server could not process request");
+  // check for required fields
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Missing required field(s) (Login user)");
   }
+  // find user exist
+  const userExist = await User.findOne({ email });
+
+  // check if user exist and password match
+  if (!userExist || !(await userExist.matchPassword(password))) {
+    res.status(400);
+    throw new Error("Invalid email or password (Login User)");
+  }
+
+  const {
+    _id,
+    firstName,
+    lastName,
+    email: userEmail,
+    photo,
+    phone,
+    bio,
+  } = userExist;
+  const token = generateToken(userExist._id);
+  res.cookie("token", token, {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 86400), // expires in 1 day
+    sameSite: "none",
+    // secure: true,
+  });
+  res.status(200).json({
+    status: "success",
+    message: "User logged in successfully",
+    user: { _id, firstName, lastName, email: userEmail, photo, phone, bio },
+    token,
+  });
 });
 
 // @desc			Logout user
@@ -188,5 +184,74 @@ export const loginStatus = ExpressAsyncHandler(async (req, res) => {
     }
   } catch (error) {
     throw new Error("Server was not able to process request");
+  }
+});
+
+// @desc			update user details except password
+// @route			/api/user/update
+// @access		private
+export const updateUserDetails = ExpressAsyncHandler(async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, bio } = req.body;
+    // find user
+    const userExist = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        firstName,
+        lastName,
+        email,
+        phone,
+        bio,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      status: "success",
+      message: "User details updated successfully",
+      user: userExist,
+    });
+  } catch (error) {
+    throw new Error(`Server was not able to process request ${error}`);
+  }
+});
+
+// @desc			update user password
+// @route			/api/user/update/password
+// @access		private
+export const updateUserPassword = ExpressAsyncHandler(async (req, res) => {
+  try {
+    const { oldPassword, newPassword, newCfPassword } = req.body;
+    // check for required fields
+    if (!oldPassword || !newPassword || !newCfPassword) {
+      res.status(400);
+      throw new Error("Missing required field (Update Password)");
+    }
+    // check password match
+    if (newPassword !== newCfPassword) {
+      res.status(400);
+      throw new Error("New given password does not match (Update Password)");
+    }
+    const userExist = await User.findById(req.user._id);
+    if (!userExist) {
+      res.status(400);
+      throw new Error("User does not exist (Update Password)");
+    }
+    // decode and match password
+    if (!(await userExist.matchPassword(oldPassword))) {
+      res.status(401);
+      throw new Error(
+        "Given password donot match our records (Update Password)"
+      );
+    }
+    // find user and update user password
+    userExist.password = newPassword;
+    await userExist.save();
+
+    res.status(200).json({
+      status: "success",
+      message: "User password updated successfully",
+    });
+  } catch (error) {
+    throw new Error(`Server was not able to process request ${error}`);
   }
 });
