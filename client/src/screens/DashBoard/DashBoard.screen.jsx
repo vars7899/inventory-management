@@ -1,17 +1,7 @@
-import React from "react";
-import DashboardHeader from "../../components/DashboardHeader/DashboardHeader.component";
-import Sidebar from "../../components/Sidebar/Sidebar.component";
-import { LayoutStyle, RightContainerStyle } from "../Layout.style";
+import Layout from "../Layout";
 
 const DashBoard = () => {
-  return (
-    <LayoutStyle>
-      <Sidebar />
-      <RightContainerStyle>
-        <DashboardHeader />
-      </RightContainerStyle>
-    </LayoutStyle>
-  );
+  return <Layout></Layout>;
 };
 
 export default DashBoard;

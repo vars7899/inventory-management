@@ -8,6 +8,7 @@ import {
   IconFileInvoice,
   IconSettings,
   IconLifebuoy,
+  IconForklift,
 } from "@tabler/icons";
 import { theme } from "../styles/globalTheme.style";
 
@@ -80,6 +81,14 @@ const SelectIcon = ({ givenType, isActive }) => {
     case "support":
       return (
         <IconLifebuoy
+          size={30}
+          stroke={1.5}
+          color={isActive ? theme.color.accent : theme.color.textLight}
+        />
+      );
+    case "supplier":
+      return (
+        <IconForklift
           size={30}
           stroke={1.5}
           color={isActive ? theme.color.accent : theme.color.textLight}

@@ -11,20 +11,27 @@ import {
 import { GiArtificialHive } from "react-icons/gi";
 import SelectIcon from "../../functions/selectIcon";
 import { theme } from "../../styles/globalTheme.style";
+import { Link, useMatch, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
-  const [currentTab, setCurrentTab] = useState("dashboard");
+  const current = useLocation().pathname;
 
   const options = [
-    "dashboard",
-    "tracking",
-    "analytics",
-    "drivers",
-    "customers",
-    "employees",
-    "documents",
+    { name: "dashboard", path: "/dashboard/home" },
+    { name: "tracking", path: "/dashboard/tracking" },
+    { name: "analytics", path: "/dashboard/analytics" },
+    { name: "drivers", path: "/dashboard/drivers" },
+    { name: "customers", path: "/dashboard/customers" },
+    { name: "employees", path: "/dashboard/employees" },
+    { name: "supplier", path: "/dashboard/supplier" },
+    { name: "documents", path: "/dashboard/documents" },
   ];
-  const otherOptions = ["settings", "support"];
+
+  const otherOptions = [
+    { name: "settings", path: "/dashboard/settings" },
+    { name: "support", path: "/dashboard/support" },
+  ];
+
   return (
     <SidebarStyleContainer>
       <SidebarStyle>
@@ -35,47 +42,59 @@ const Sidebar = () => {
           </BrandLogo>
           <SidebarOptionList>
             {options.map((item, index) => (
-              <SidebarOptionItem
-                key={`sidebar-option-${index}`}
-                whileHover={{
-                  scale: currentTab === item ? 1 : 1.02,
-                  background:
-                    currentTab === item
-                      ? theme.color.accent2
-                      : theme.color.grey2,
-                }}
-                animate={currentTab === item ? "visible" : "hidden"}
-                whileTap={{ scale: 0.99, background: theme.color.accent2 }}
-                onClick={() => setCurrentTab(item)}
-              >
-                {<SelectIcon givenType={item} isActive={currentTab === item} />}
-                <p>{item}</p>
-              </SidebarOptionItem>
+              <Link key={`sidebar-option-${index}`} to={item.path}>
+                <SidebarOptionItem
+                  whileHover={{
+                    scale: current === item.path ? 1 : 1.02,
+                    background:
+                      current === item.path
+                        ? theme.color.accent2
+                        : theme.color.grey2,
+                  }}
+                  animate={current === item.path ? "visible" : "hidden"}
+                  whileTap={{ scale: 0.99, background: theme.color.accent2 }}
+                  onClick={() => setCurrentTab(item.name)}
+                >
+                  {
+                    <SelectIcon
+                      givenType={item.name}
+                      isActive={current === item.path}
+                    />
+                  }
+                  <p>{item.name}</p>
+                </SidebarOptionItem>
+              </Link>
             ))}
           </SidebarOptionList>
         </SidebarUpper>
         <SidebarLower>
           <SidebarOptionList>
             {otherOptions.map((item, index) => (
-              <SidebarOptionItem
-                key={`sidebar-option-other-${index}`}
-                whileHover={{
-                  scale: currentTab === item ? 1 : 1.02,
-                  background:
-                    currentTab === item
-                      ? theme.color.accent2
-                      : theme.color.grey2,
-                }}
-                animate={currentTab === item ? "visible" : "hidden"}
-                whileTap={{
-                  scale: 0.99,
-                  background: theme.color.accent2,
-                }}
-                onClick={() => setCurrentTab(item)}
-              >
-                {<SelectIcon givenType={item} isActive={currentTab === item} />}
-                <p>{item}</p>
-              </SidebarOptionItem>
+              <Link key={`sidebar-option-${index}`} to={item.path}>
+                <SidebarOptionItem
+                  whileHover={{
+                    scale: current === item.path ? 1 : 1.02,
+                    background:
+                      current === item.path
+                        ? theme.color.accent2
+                        : theme.color.grey2,
+                  }}
+                  animate={current === item.path ? "visible" : "hidden"}
+                  whileTap={{
+                    scale: 0.99,
+                    background: theme.color.accent2,
+                  }}
+                  onClick={() => setCurrentTab(item)}
+                >
+                  {
+                    <SelectIcon
+                      givenType={item.name}
+                      isActive={current === item.path}
+                    />
+                  }
+                  <p>{item.name}</p>
+                </SidebarOptionItem>
+              </Link>
             ))}
           </SidebarOptionList>
         </SidebarLower>

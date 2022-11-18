@@ -5,6 +5,8 @@ import "./App.css";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.screen";
 import PageNotFound from "./screens/PageNotFound/PageNotFound.screen";
 import DashBoard from "./screens/DashBoard/DashBoard.screen";
+import SupplierScreen from "./screens/SupplierScreen/SupplierScreen.screen";
+import LoginScreen from "./screens/LoginScreen/LoginScreen.screen";
 
 function App() {
   return (
@@ -13,7 +15,10 @@ function App() {
         <div className="app">
           <Routes>
             <Route path="/" element={<HomeScreen />} />
-            <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/login" element={<LoginScreen />} />
+            {/* <Route path="/register" element={<RegisterScreen />} /> */}
+            <Route path="/dashboard/home" element={<DashBoard />} />
+            <Route path="/dashboard/supplier" element={<SupplierScreen />} />
             {/* 404 page */}
             <Route path="*" element={<PageNotFound />} />
           </Routes>

@@ -7,4 +7,5 @@ export const LayoutStyle = styled.div`
 export const RightContainerStyle = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
 `;

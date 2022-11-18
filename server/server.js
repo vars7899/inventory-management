@@ -24,13 +24,13 @@ connectDB();
 
 // Routes
 // Server Home Page
-app.get("/", (req, res) => {
+app.get("/api/v1", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
   let html = fs.readFileSync(path.join(process.cwd(), "page", "index.html"));
   res.end(html);
 });
-app.use("/api/user", userRouter);
-app.use("/api/supplier", supplierRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/supplier", supplierRouter);
 // error middleware
 app.use(errorHandler);
 
