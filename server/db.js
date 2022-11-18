@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { errorToConsole } from "./helperFunction/console.js";
+import { errorToConsole } from "./utils/console.js";
 
 async function connectDB() {
   try {

@@ -1,10 +1,9 @@
 import express from "express";
-import colors from "colors";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import connectDB from "./db.js";
-import { errorHandler } from "./helperFunction/errorHandler.js";
+import { errorHandler } from "./utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import supplierRouter from "./routes/supplier.routes.js";
