@@ -58,7 +58,7 @@ export const createNewSupplier = ExpressAsyncHandler(async (req, res) => {
   // response
   if (newSupplier) {
     res.status(200).json({
-      status: "success",
+      success: true,
       message: "New supplier created successfully",
       supplier: newSupplier,
     });
@@ -81,7 +81,7 @@ export const getAllSupplier = ExpressAsyncHandler(async (req, res) => {
 
   if (listOfSupplier) {
     res.status(200).json({
-      status: "success",
+      success: true,
       message: "New supplier created successfully",
       supplier: listOfSupplier,
     });
@@ -146,7 +146,7 @@ export const updateSupplierDetails = ExpressAsyncHandler(async (req, res) => {
 
   if (updatedSupplier) {
     res.status(200).json({
-      status: "success",
+      success: true,
       message: "Supplier details updated successfully",
       supplier: updatedSupplier,
     });
@@ -186,7 +186,7 @@ export const deleteSupplier = ExpressAsyncHandler(async (req, res) => {
 
   if (supplier) {
     return res.status(200).json({
-      status: "success",
+      success: true,
       message: "Supplier deleted from record successfully",
     });
   } else {

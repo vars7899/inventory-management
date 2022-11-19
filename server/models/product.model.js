@@ -1,12 +1,30 @@
 import mongoose from "mongoose";
 
-const CategorySchema = mongoose.Schema({
-  type: String,
-  maxLength: [20, "Category name should not be more than 20 characters"],
+const PackageDetailsSchema = mongoose.Schema({
+  length: {
+    type: Number,
+    required: true,
+  },
+  width: {
+    type: Number,
+    required: true,
+  },
+  height: {
+    type: Number,
+    required: true,
+  },
+  weight: {
+    type: Number,
+    required: true,
+  },
 });
 
 const ProductSchema = mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
     name: {
       type: String,
       required: [true, "Product name is a required field"],
@@ -18,7 +36,7 @@ const ProductSchema = mongoose.Schema(
       trim: true,
     },
     price: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
     },
     description: {
@@ -42,32 +60,14 @@ const ProductSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: [true, "product image is required field"],
       default:
         "https://res.cloudinary.com/dfcaehp0b/image/upload/v1668627770/original-f43759158f1845e0cc8e11e714acb98a_zfcpby.webp",
+      required: [true, "product image is required field"],
     },
-    packageDetails: {
-      length: {
-        type: mongoose.Types.Decimal128,
-        required: true,
-      },
-      breadth: {
-        type: mongoose.Types.Decimal128,
-        required: true,
-      },
-      height: {
-        type: mongoose.Types.Decimal128,
-        required: true,
-      },
-      weight: {
-        type: mongoose.Types.Decimal128,
-        required: true,
-      },
-    },
+    packageDetails: { type: PackageDetailsSchema, required: true },
     supplier: {
-      type: mongoose.Types.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "supplier",
-      required: true,
     },
   },
   { timestamps: true }

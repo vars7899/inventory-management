@@ -61,7 +61,7 @@ export const registerUser = ExpressAsyncHandler(async (req, res) => {
   // response
   if (newUser) {
     res.status(201).json({
-      status: "success",
+      success: true,
       message: "User registered successfully",
       user: newUser,
       token,
@@ -113,7 +113,7 @@ export const loginUser = ExpressAsyncHandler(async (req, res) => {
     // secure: true,
   });
   res.status(200).json({
-    status: "success",
+    success: true,
     message: "User logged in successfully",
     user: { _id, firstName, lastName, email: userEmail, photo, phone, bio },
     token,
@@ -133,7 +133,7 @@ export const logoutUser = ExpressAsyncHandler(async (req, res) => {
       // secure: true,
     });
     return res.status(200).json({
-      status: "Success",
+      success: true,
       message: "User logged out successfully",
     });
   } catch (err) {
@@ -153,7 +153,7 @@ export const getUserDetails = ExpressAsyncHandler(async (req, res) => {
       throw new Error("user does not exist (User Details)");
     }
     res.status(200).json({
-      status: "success",
+      success: true,
       user: userExist,
     });
   } catch (error) {
@@ -169,19 +169,19 @@ export const loginStatus = ExpressAsyncHandler(async (req, res) => {
     const token = req.cookies.token;
     if (!token) {
       return res.status(200).json({
-        status: "success",
+        success: true,
         isLoggedIn: false,
       });
     }
     const verified = await jwt.verify(token, process.env.JWT_SECRET);
     if (verified) {
       return res.status(200).json({
-        status: "success",
+        success: true,
         isLoggedIn: true,
       });
     } else {
       return res.status(200).json({
-        status: "success",
+        success: true,
         isLoggedIn: false,
       });
     }
@@ -209,7 +209,7 @@ export const updateUserDetails = ExpressAsyncHandler(async (req, res) => {
       { new: true }
     );
     res.status(200).json({
-      status: "success",
+      success: true,
       message: "User details updated successfully",
       user: userExist,
     });
@@ -251,7 +251,7 @@ export const updateUserPassword = ExpressAsyncHandler(async (req, res) => {
     await userExist.save();
 
     res.status(200).json({
-      status: "success",
+      success: true,
       message: "User password updated successfully",
     });
   } catch (error) {
@@ -319,7 +319,7 @@ export const resetPassword = ExpressAsyncHandler(async (req, res) => {
         emailBody
       );
       res.send({
-        status: "success",
+        success: true,
         message:
           "A reset link to update password will be sent to provided email",
       });
@@ -369,7 +369,7 @@ export const resetPasswordRequest = ExpressAsyncHandler(async (req, res) => {
     await userExist.save();
 
     res.status(200).json({
-      status: "success",
+      success: true,
       message:
         "Password reset successfully, please Sign in with new credentials",
     });

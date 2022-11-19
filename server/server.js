@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import supplierRouter from "./routes/supplier.routes.js";
 import bodyParser from "body-parser";
+import productRouter from "./routes/product.routes.js";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
@@ -30,6 +31,7 @@ app.get("/api/v1", (req, res) => {
 });
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/supplier", supplierRouter);
+app.use("/api/v1/product", productRouter);
 // error middleware
 app.use(errorHandler);
 
