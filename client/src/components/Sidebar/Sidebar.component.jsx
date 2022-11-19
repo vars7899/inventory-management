@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   SidebarStyleContainer,
   BrandLogo,
@@ -51,6 +51,7 @@ const Sidebar = () => {
                         ? theme.color.accent2
                         : theme.color.grey2,
                   }}
+                  initial={current === item.path ? "visible" : "hidden"}
                   animate={current === item.path ? "visible" : "hidden"}
                   whileTap={{ scale: 0.99, background: theme.color.accent2 }}
                   onClick={() => setCurrentTab(item.name)}

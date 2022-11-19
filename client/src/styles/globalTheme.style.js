@@ -24,4 +24,5 @@ export const theme = {
     dxl: "4rem",
     fxl: "6rem",
   },
+  variant: "outline",
 };

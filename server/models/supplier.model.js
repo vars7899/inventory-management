@@ -49,7 +49,7 @@ const SupplierSchema = mongoose.Schema(
     },
     website: {
       type: String,
-      default: "www.suplier-website-not-available.com",
+      default: "www.supplier-website-not-available.com",
     },
   },
   {

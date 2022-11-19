@@ -1,10 +1,21 @@
 import mongoose from "mongoose";
 
-const ProductSchema = mongooose.Schema(
+const CategorySchema = mongoose.Schema({
+  type: String,
+  maxLength: [20, "Category name should not be more than 20 characters"],
+});
+
+const ProductSchema = mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, "Product name is a required field"],
+      trim: true,
+    },
+    sku: {
+      type: String,
+      required: true,
+      trim: true,
     },
     price: {
       type: mongoose.Types.Decimal128,
@@ -12,12 +23,12 @@ const ProductSchema = mongooose.Schema(
     },
     description: {
       type: String,
-      maxLength: [500, "Description should be no more than 500 charaters"],
+      maxLength: [500, "Description should be no more than 500 characters"],
     },
     category: [
       {
         type: String,
-        maxLength: [20, "Category name should not be more than 20 charaters"],
+        maxLength: [20, "Category name should not be more than 20 characters"],
       },
     ],
     sellingType: {

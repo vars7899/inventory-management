@@ -39,7 +39,6 @@ export const SidebarOptionList = styled.div`
   margin-top: 20px;
 `;
 export const SidebarOptionItem = styled(motion.div).attrs(() => ({
-  initial: "visible",
   variants,
 }))`
   display: flex;
