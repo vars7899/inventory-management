@@ -8,6 +8,17 @@ import DashBoard from "./screens/DashBoard/DashBoard.screen";
 import SupplierScreen from "./screens/SupplierScreen/SupplierScreen.screen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen.screen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen.screen";
+import PasswordResetEmail from "./screens/Authentication/PasswordResetEmail.screen";
+import PasswordUpdateForm from "./screens/Authentication/PasswordUpdateForm.screen";
+import NewProduct from "./screens/DashBoard/NewProduct.screen";
+import Product from "./screens/DashBoard/Product.screen";
+import UpdateProduct from "./screens/DashBoard/UpdateProduct.screen";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// save cookies we get from back
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
@@ -17,12 +28,26 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/login" element={<LoginScreen />} />
+            <Route path="/reset" element={<PasswordResetEmail />} />
+            <Route
+              path="/reset-password/:resetToken"
+              element={<PasswordUpdateForm />}
+            />
             <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/dashboard/home" element={<DashBoard />} />
+            <Route path="/dashboard/dashboard" element={<DashBoard />} />
+            {/* Product routes */}
+            <Route path="/dashboard/product" element={<Product />} />
+            <Route path="/dashboard/product/new" element={<NewProduct />} />
+            <Route
+              path="/dashboard/product/:productId"
+              element={<UpdateProduct />}
+            />
+            {/* Supplier routes */}
             <Route path="/dashboard/supplier" element={<SupplierScreen />} />
             {/* 404 page */}
             <Route path="*" element={<PageNotFound />} />
           </Routes>
+          <ToastContainer position="top-right" autoClose={5000} theme="light" />
         </div>
       </ThemeProvider>
     </Router>

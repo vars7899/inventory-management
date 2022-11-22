@@ -7,8 +7,8 @@ import { errorHandler } from "./utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import supplierRouter from "./routes/supplier.routes.js";
-import bodyParser from "body-parser";
 import productRouter from "./routes/product.routes.js";
+import cors from "cors";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
@@ -18,6 +18,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // Connect to database
 connectDB();

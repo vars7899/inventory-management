@@ -1,5 +1,8 @@
+import { nanoid } from "nanoid";
+
 export const supplier_data = [
   {
+    _id: nanoid(),
     name: "Vision electrical componets LTD",
     street: "9225 Stuart Crescent",
     city: "Surrey",
@@ -12,6 +15,7 @@ export const supplier_data = [
     website: "aoishrogiweoirg@drg.ih",
   },
   {
+    _id: nanoid(),
     name: "Walamrt electrical componets LTD",
     street: "9225 Stuart Crescent",
     city: "Surrey",
@@ -24,6 +28,7 @@ export const supplier_data = [
     website: "aoishrogiweoirg@drg.ih",
   },
   {
+    _id: nanoid(),
     name: "Target electrical componets LTD",
     street: "9225 Stuart Crescent",
     city: "Surrey",

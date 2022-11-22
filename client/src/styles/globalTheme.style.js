@@ -11,6 +11,7 @@ export const theme = {
     dark2: "#0a1b1e",
     grey: "#727478",
     grey2: "#2c2e33",
+    grey3: "#72747850",
     red: "#fd460a",
   },
   container: {
@@ -25,4 +26,7 @@ export const theme = {
     fxl: "6rem",
   },
   variant: "outline",
+  icon: {
+    xl: "60px",
+  },
 };

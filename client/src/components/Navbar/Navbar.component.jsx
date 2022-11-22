@@ -10,6 +10,9 @@ import {
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GiArtificialHive } from "react-icons/gi";
 import ButtonComponent from "../Button/Button.component";
+import { Button } from "@chakra-ui/react";
+import { theme } from "../../styles/globalTheme.style";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -43,8 +46,21 @@ const Navbar = () => {
           </NavBarList>
         </div>
         <ActionList>
-          <ButtonComponent text={"login"} />
-          <ButtonComponent text={"start a demo"} type="outline" />
+          <Link to="/login">
+            <Button variant="ghost" size="lg">
+              Sign In
+            </Button>
+          </Link>
+          <Link to="/register">
+            <Button
+              ml="10px"
+              variant="outline"
+              size="lg"
+              borderColor={theme.color.accent}
+            >
+              Start A Demo
+            </Button>
+          </Link>
         </ActionList>
       </NavBar>
     </NavBarContainer>

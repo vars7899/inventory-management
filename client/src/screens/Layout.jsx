@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import React from "react";
 import DashboardHeader from "../components/DashboardHeader/DashboardHeader.component";
 import Sidebar from "../components/Sidebar/Sidebar.component";
@@ -9,7 +10,9 @@ const Layout = ({ children }) => {
       <Sidebar />
       <RightContainerStyle>
         <DashboardHeader />
-        {children}
+        <Box overflowY="scroll" padding="20px">
+          {children}
+        </Box>
       </RightContainerStyle>
     </LayoutStyle>
   );

@@ -15,7 +15,7 @@ const variants = {
 
 export const SidebarStyleContainer = styled.div`
   background-color: ${(props) => props.theme.color.dark};
-  width: 100%;
+  /* width: 100%; */
   min-height: 100vh;
   padding: 0px 10px;
   overflow: hidden;
@@ -41,6 +41,7 @@ export const SidebarOptionList = styled.div`
 export const SidebarOptionItem = styled(motion.div).attrs(() => ({
   variants,
 }))`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -64,12 +65,4 @@ export const BrandLogo = styled.div`
   padding: 20px;
   width: 100%;
   border-bottom: 1px solid ${(props) => props.theme.color.grey2};
-  & > p {
-    margin-left: 10px;
-    width: 150px;
-    color: ${({ theme }) => theme.color.text};
-    font-size: ${(props) => props.theme.text.xs};
-    font-weight: bolder;
-    line-height: 0.95rem;
-  }
 `;

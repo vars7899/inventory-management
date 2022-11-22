@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   SidebarStyleContainer,
   BrandLogo,
@@ -12,17 +12,20 @@ import { GiArtificialHive } from "react-icons/gi";
 import SelectIcon from "../../functions/selectIcon";
 import { theme } from "../../styles/globalTheme.style";
 import { Link, useMatch, useLocation } from "react-router-dom";
+import { Flex, IconButton, Spacer, Text, Box } from "@chakra-ui/react";
+import { IconX } from "@tabler/icons";
 
 const Sidebar = () => {
   const current = useLocation().pathname;
+  const [miniSidebar, setMiniSidebar] = useState(true);
 
   const options = [
-    { name: "dashboard", path: "/dashboard/home" },
+    { name: "dashboard", path: "/dashboard/dashboard" },
     { name: "tracking", path: "/dashboard/tracking" },
     { name: "analytics", path: "/dashboard/analytics" },
     { name: "drivers", path: "/dashboard/drivers" },
     { name: "customers", path: "/dashboard/customers" },
-    { name: "employees", path: "/dashboard/employees" },
+    { name: "product", path: "/dashboard/product" },
     { name: "supplier", path: "/dashboard/supplier" },
     { name: "documents", path: "/dashboard/documents" },
   ];
@@ -37,8 +40,44 @@ const Sidebar = () => {
       <SidebarStyle>
         <SidebarUpper>
           <BrandLogo>
-            <GiArtificialHive size={45} color="red" />
-            <p>vision inventory management</p>
+            <Flex w="100%">
+              <Box>
+                <GiArtificialHive
+                  size="45px"
+                  color="red"
+                  onClick={() => setMiniSidebar(false)}
+                  style={{ cursor: "pointer" }}
+                />
+              </Box>
+              {!miniSidebar && (
+                <Flex w="250px">
+                  <Text
+                    ml="10px"
+                    color={theme.color.text}
+                    fontSize="sm"
+                    maxW="150px"
+                    fontWeight="bold"
+                    display="flex"
+                    alignItems="center"
+                    lineHeight="0.95rem"
+                  >
+                    vision inventory management
+                  </Text>
+                  <Spacer />
+                  <IconButton
+                    variant="unstyled"
+                    icon={
+                      <IconX
+                        color={theme.color.accent}
+                        size="20px"
+                        strokeWidth="2px"
+                      />
+                    }
+                    onClick={() => setMiniSidebar(true)}
+                  />
+                </Flex>
+              )}
+            </Flex>
           </BrandLogo>
           <SidebarOptionList>
             {options.map((item, index) => (
@@ -62,7 +101,7 @@ const Sidebar = () => {
                       isActive={current === item.path}
                     />
                   }
-                  <p>{item.name}</p>
+                  {!miniSidebar && <p>{item.name}</p>}
                 </SidebarOptionItem>
               </Link>
             ))}
@@ -93,7 +132,7 @@ const Sidebar = () => {
                       isActive={current === item.path}
                     />
                   }
-                  <p>{item.name}</p>
+                  {!miniSidebar && <p>{item.name}</p>}
                 </SidebarOptionItem>
               </Link>
             ))}

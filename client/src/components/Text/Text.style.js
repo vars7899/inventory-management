@@ -27,3 +27,6 @@ export const FlexCenter = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const TextBold = styled.text`
+  font-weight: bolder;
+`;
