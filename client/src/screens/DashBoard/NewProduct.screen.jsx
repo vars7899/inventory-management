@@ -28,7 +28,7 @@ import { useNavigate } from "react-router-dom";
 import CustomHeaderContainer from "../../components/CustomHeaderContainer/CustomHeaderContainer.component";
 import CustomImageDrop from "../../components/CustomImageDrop/CustomImageDrop.component";
 import { theme } from "../../styles/globalTheme.style";
-import Layout from "../Layout";
+import Layout from "../Layouts/Layout";
 
 const NewProduct = () => {
   const toast = useToast();

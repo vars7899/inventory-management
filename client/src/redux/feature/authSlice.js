@@ -3,7 +3,6 @@ import authService from "../service/authService";
 
 // Get user name from local storage
 const userName = JSON.parse(localStorage.getItem("userName"));
-console.log(userName);
 
 const initialState = {
   isLoggedIn: false,
@@ -12,8 +11,8 @@ const initialState = {
   isLoading: false,
   message: null,
   name: {
-    firstName: userName.firstName ? userName.firstName : "",
-    lastName: userName.lastName ? userName.lastName : "",
+    firstName: userName?.firstName ? userName.firstName : "",
+    lastName: userName?.lastName ? userName.lastName : "",
   },
   user: null,
 };
@@ -62,7 +61,57 @@ export const logoutUser = createAsyncThunk("auth/logout", async (thunkAPI) => {
     return thunkAPI.rejectWithValue(message);
   }
 });
-
+export const userForgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.forgotPassword(user);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const userResetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.resetPassword(
+        user.updatePassword,
+        user.resetToken
+      );
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const userLoginStatus = createAsyncThunk(
+  "auth/loginStatus",
+  async (thunkAPI) => {
+    try {
+      return await authService.checkLoginStatus();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -90,8 +139,8 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload.user;
-        state.name.firstName = action.payload.user.firstName;
-        state.name.lastName = action.payload.user.lastName;
+        state.name.firstName = action.payload.user?.firstName;
+        state.name.lastName = action.payload.user?.lastName;
         state.message = action.payload.message;
         state.isLoggedIn = true;
       })
@@ -106,6 +155,13 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        localStorage.setItem(
+          "userName",
+          JSON.stringify({
+            firstName: action.payload.user.firstName,
+            lastName: action.payload.user.lastName,
+          })
+        );
         state.isLoading = false;
         state.isSuccess = true;
         state.message = action.payload.message;
@@ -140,6 +196,46 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+      .addCase(userForgotPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userForgotPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload.message;
+      })
+      .addCase(userForgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(userResetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userResetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload.message;
+      })
+      .addCase(userResetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(userLoginStatus.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userLoginStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isLoggedIn = action.payload.isLoggedIn;
+      })
+      .addCase(userLoginStatus.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isLoggedIn = false;
+        state.message = action.payload;
       });
   },
 });

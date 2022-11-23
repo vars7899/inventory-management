@@ -51,10 +51,10 @@ export const registerUser = ExpressAsyncHandler(async (req, res) => {
 
   // send HTTP-only cookie
   res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
+    // path: "/",
+    // httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400), // expires in 1 day
-    sameSite: "none",
+    // sameSite: "none",
     // secure: true,
   });
 
@@ -106,10 +106,10 @@ export const loginUser = ExpressAsyncHandler(async (req, res) => {
   } = userExist;
   const token = generateToken(userExist._id);
   res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
+    // path: "/",
+    // httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400), // expires in 1 day
-    sameSite: "none",
+    // sameSite: "none",
     // secure: true,
   });
   res.status(200).json({
@@ -126,10 +126,10 @@ export const loginUser = ExpressAsyncHandler(async (req, res) => {
 export const logoutUser = ExpressAsyncHandler(async (req, res) => {
   try {
     res.cookie("token", "", {
-      path: "/",
-      httpOnly: true,
+      // path: "/",
+      // httpOnly: true,
       expires: new Date(0), // expire cookie
-      sameSite: "none",
+      // sameSite: "none",
       // secure: true,
     });
     return res.status(200).json({

@@ -20,7 +20,7 @@ const Sidebar = () => {
   const [miniSidebar, setMiniSidebar] = useState(true);
 
   const options = [
-    { name: "dashboard", path: "/dashboard/dashboard" },
+    { name: "dashboard", path: "/dashboard/home" },
     { name: "tracking", path: "/dashboard/tracking" },
     { name: "analytics", path: "/dashboard/analytics" },
     { name: "drivers", path: "/dashboard/drivers" },

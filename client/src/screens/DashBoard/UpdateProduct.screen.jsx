@@ -29,7 +29,7 @@ import CustomHeaderContainer from "../../components/CustomHeaderContainer/Custom
 import CustomImageDrop from "../../components/CustomImageDrop/CustomImageDrop.component";
 import { theme } from "../../styles/globalTheme.style";
 import DashboardTabHeader from "../../components/DashboardTabHeader/DashboardTabHeader.component";
-import Layout from "../Layout";
+import Layout from "../Layouts/Layout";
 
 const UpdateProduct = () => {
   const toast = useToast();

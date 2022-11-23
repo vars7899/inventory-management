@@ -3,6 +3,7 @@ import {
   createNewSupplier,
   deleteSupplier,
   getAllSupplier,
+  getSupplierById,
   updateSupplierDetails,
 } from "../controllers/supplier.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
@@ -15,6 +16,7 @@ supplierRouter
 supplierRouter
   .route("/:id")
   .patch(auth, updateSupplierDetails)
-  .delete(auth, deleteSupplier);
+  .delete(auth, deleteSupplier)
+  .get(auth, getSupplierById);
 
 export default supplierRouter;

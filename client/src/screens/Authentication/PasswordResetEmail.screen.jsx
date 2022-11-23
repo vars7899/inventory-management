@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LogoLarge } from "../../components/Logo/Logo.components";
 import LoginRegisterLayout from "../Layouts/LoginRegisterLayout";
 import {
@@ -24,22 +24,43 @@ import {
 } from "../../components/Text/Text.style";
 import { Link } from "react-router-dom";
 import { validateEmail } from "../../functions/checkEmail";
+import { useDispatch, useSelector } from "react-redux";
+import { RESET, userForgotPassword } from "../../redux/feature/authSlice";
+import { toast } from "react-toastify";
 
 const PasswordResetEmail = () => {
-  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const { isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+  const [email, setEmail] = useState({ email: "" });
   const [showSuccess, setShowSuccess] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
-  const handleTypeChange = (text) => {
-    setEmail(text);
-    if (validateEmail(text)) {
+  const handleTypeChange = (e) => {
+    const { name, value } = e.target;
+    setEmail(() => ({ [name]: value }));
+    if (validateEmail(value)) {
       setIsDisabled(() => false);
       return;
     }
     setIsDisabled(() => true);
   };
-  const handleSubmit = () => {
-    setShowSuccess(() => true);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+      setIsDisabled(false);
+    }
+    if (isSuccess) {
+      toast.success(message);
+      setShowSuccess(() => true);
+    }
+    dispatch(RESET());
+  });
+  const handleSubmit = async () => {
     setIsDisabled(() => true);
+    console.log(email);
+    await dispatch(userForgotPassword(email));
   };
   return (
     <LoginRegisterLayout>
@@ -47,9 +68,14 @@ const PasswordResetEmail = () => {
       <br />
       <Box p="20px">
         <Flex mb="10px">
-          <TextExtraLarge>
-            <Text>Reset Password</Text>
-          </TextExtraLarge>
+          <Text
+            fontSize="6xl"
+            fontWeight="bold"
+            lineHeight="4rem"
+            color={theme.color.text}
+          >
+            Reset Password
+          </Text>
         </Flex>
         <Flex>
           <TextSmall>
@@ -68,11 +94,14 @@ const PasswordResetEmail = () => {
             <Input
               type="email"
               size="lg"
-              onChange={(e) => handleTypeChange(e.target.value)}
+              name="email"
+              onChange={handleTypeChange}
             />
           </FormControl>
         ) : (
-          <Text>Please check your provided email for reset password link</Text>
+          <Text color={theme.color.text}>
+            Please check your provided email for reset password link
+          </Text>
         )}
         <VStack align="flex-end">
           <Button
@@ -88,12 +117,12 @@ const PasswordResetEmail = () => {
         </VStack>
         <Divider />
         <FlexCenter>
-          <Text>
-            Already have an Account ?
-            <Link to="/login">
-              <TextBold> Login</TextBold>
-            </Link>
-          </Text>
+          <Text color={theme.color.grey}>Already have an Account ? </Text>
+          <Link to="/login">
+            <Text color={theme.color.grey} fontWeight="bold">
+              Login
+            </Text>
+          </Link>
         </FlexCenter>
       </LoginFormArea>
     </LoginRegisterLayout>

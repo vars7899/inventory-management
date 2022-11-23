@@ -42,9 +42,8 @@ const initialState = {
 const RegisterScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoading, isSuccess, isError, message } = useSelector(
-    (state) => state.auth
-  );
+  const { user, isLoading, isSuccess, isError, message, isLoggedIn } =
+    useSelector((state) => state.auth);
 
   // states
   const [currentTab, setCurrentTab] = useState(0);
@@ -64,12 +63,12 @@ const RegisterScreen = () => {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess || user) {
+    if (isLoggedIn || isSuccess || user) {
       toast.success(message);
-      navigate("/dashboard/dashboard");
+      navigate("/dashboard/home");
     }
     dispatch(RESET());
-  }, [user, message, isError, isSuccess, navigate, dispatch]);
+  }, [user, message, isError, isSuccess, navigate, dispatch, isLoggedIn]);
 
   // function to submit form data
   const handleSubmit = async (e) => {

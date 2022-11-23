@@ -30,7 +30,6 @@ const userSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: [true, "image is a required data field"],
       default:
         "https://res.cloudinary.com/dfcaehp0b/image/upload/v1668627770/original-f43759158f1845e0cc8e11e714acb98a_zfcpby.webp",
     },

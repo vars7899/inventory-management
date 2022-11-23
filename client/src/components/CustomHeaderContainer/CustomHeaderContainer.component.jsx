@@ -4,7 +4,7 @@ import { theme } from "../../styles/globalTheme.style";
 
 const CustomHeaderContainer = ({ children, given_text }) => {
   return (
-    <Box w="100%">
+    <Box w={{ base: "100%" }}>
       <Text
         fontSize={{ base: "md", xl: "xl" }}
         fontWeight="bold"
@@ -16,7 +16,7 @@ const CustomHeaderContainer = ({ children, given_text }) => {
       <Box
         border={`1px solid ${theme.color.grey3}`}
         borderRadius="10px"
-        padding={{ base: "10px", xl: "20px" }}
+        padding={{ base: "20px" }}
       >
         <VStack spacing="10px">{children}</VStack>
       </Box>

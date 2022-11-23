@@ -9,9 +9,11 @@ import {
 import StaticsCard from "../../components/HomeComponents/StaticsCard.components";
 import ActiveShipment from "../../components/HomeComponents/ActiveShipment.components";
 import { theme } from "../../styles/globalTheme.style";
-import Layout from "../Layout";
+import Layout from "../Layouts/Layout";
+import { useRedirectLoggedOut } from "../../hooks/useRedirect";
 
 const DashBoard = () => {
+  useRedirectLoggedOut("/login");
   return (
     <Layout>
       <Grid templateColumns="repeat(5,1fr)" p="20px" gridGap="10px">

@@ -17,6 +17,7 @@ export const createNewSupplier = ExpressAsyncHandler(async (req, res) => {
     website,
     email,
   } = req.body;
+  console.log(req.body);
 
   // check for required fields
   if (
@@ -54,7 +55,7 @@ export const createNewSupplier = ExpressAsyncHandler(async (req, res) => {
     email,
     website,
   });
-  await newSupplier.populate("clientName", "-password");
+  // await newSupplier.populate("clientName", "-password");
   // response
   if (newSupplier) {
     res.status(200).json({
@@ -82,7 +83,7 @@ export const getAllSupplier = ExpressAsyncHandler(async (req, res) => {
   if (listOfSupplier) {
     res.status(200).json({
       success: true,
-      message: "New supplier created successfully",
+      message: "List of supplier fetched successfully",
       supplier: listOfSupplier,
     });
   } else {
@@ -189,6 +190,35 @@ export const deleteSupplier = ExpressAsyncHandler(async (req, res) => {
       success: true,
       message: "Supplier deleted from record successfully",
     });
+  } else {
+    throw new Error(
+      "Server was not able to process request (User registration)"
+    );
+  }
+});
+
+// @desc		GET supplier by id
+// @route		/api/supplier/:id
+// @access		private
+export const getSupplierById = ExpressAsyncHandler(async (req, res) => {
+  if (!req.user) {
+    res.status(400);
+    throw new Error("Invalid user, Not authorized for this function");
+  }
+  const { id } = req.params;
+  // find if the supplier exist
+  const supplierExist = await Supplier.findById(id);
+  await supplierExist.populate("clientName", "-password");
+
+  if (supplierExist) {
+    return res.status(200).json({
+      success: true,
+      message: "Supplier fetched successfully",
+      supplier: supplierExist,
+    });
+  } else if (!supplierExist) {
+    res.status(400);
+    throw new Error("Supplier does not exist");
   } else {
     throw new Error(
       "Server was not able to process request (User registration)"

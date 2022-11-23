@@ -23,7 +23,6 @@ const HomeHeader = () => {
         </HeaderLeft>
         <HeaderRight></HeaderRight>
       </HomeHeaderStyle>
-      ;
     </HomeHeaderContainerStyle>
   );
 };

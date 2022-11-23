@@ -51,7 +51,7 @@ const Supplier = () => {
   const [query, setQuery] = useState("");
 
   return (
-    <Box p="20px">
+    <Box mt="20px">
       <Flex mb="20px">
         <Input
           maxW="200px"

@@ -13,8 +13,7 @@ import CustomTable from "../../components/CustomTable/CustomTable.component";
 import DashboardTabHeader from "../../components/DashboardTabHeader/DashboardTabHeader.component";
 import { supplier_data } from "../../data/dummy";
 import { theme } from "../../styles/globalTheme.style";
-import Layout from "../Layout";
-import NewProduct from "./NewProduct.screen";
+import Layout from "../Layouts/Layout";
 
 const Product = () => {
   const navigate = useNavigate();

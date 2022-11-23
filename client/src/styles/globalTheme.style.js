@@ -13,6 +13,7 @@ export const theme = {
     grey2: "#2c2e33",
     grey3: "#72747850",
     red: "#fd460a",
+    alert: "red",
   },
   container: {
     maxWidth: "1280px",

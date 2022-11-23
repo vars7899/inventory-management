@@ -35,9 +35,8 @@ const initialState = {
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, isError, isSuccess, user, message } = useSelector(
-    (state) => state.auth
-  );
+  const { isLoading, isError, isSuccess, user, message, isLoggedIn } =
+    useSelector((state) => state.auth);
   // states
   const [userData, setUserData] = useState(initialState);
   const { password, email } = userData;
@@ -50,12 +49,12 @@ const LoginScreen = () => {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess || user) {
+    if (isLoggedIn || isSuccess || user) {
       toast.success(message);
-      navigate("/dashboard/dashboard");
+      navigate("/dashboard/home");
     }
     dispatch(RESET());
-  }, [dispatch, navigate, isSuccess, isError, user, message]);
+  }, [dispatch, navigate, isSuccess, isError, user, message, isLoggedIn]);
   // function to submit data
   async function handleSubmit(e) {
     e.preventDefault();

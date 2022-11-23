@@ -1,4 +1,3 @@
-import React from "react";
 import {
   ActionList,
   BrandLogo,
@@ -9,10 +8,13 @@ import {
 } from "./Navbar.style";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { GiArtificialHive } from "react-icons/gi";
-import ButtonComponent from "../Button/Button.component";
 import { Button } from "@chakra-ui/react";
 import { theme } from "../../styles/globalTheme.style";
 import { Link } from "react-router-dom";
+import {
+  ShowOnLogin,
+  ShowOnLogout,
+} from "../ProtectedRoutes/HiddenLinks.components";
 
 const Navbar = () => {
   return (
@@ -46,21 +48,37 @@ const Navbar = () => {
           </NavBarList>
         </div>
         <ActionList>
-          <Link to="/login">
-            <Button variant="ghost" size="lg">
-              Sign In
-            </Button>
-          </Link>
-          <Link to="/register">
-            <Button
-              ml="10px"
-              variant="outline"
-              size="lg"
-              borderColor={theme.color.accent}
-            >
-              Start A Demo
-            </Button>
-          </Link>
+          <ShowOnLogout>
+            <Link to="/login">
+              <Button variant="ghost" size="lg">
+                Sign In
+              </Button>
+            </Link>
+          </ShowOnLogout>
+          <ShowOnLogout>
+            <Link to="/register">
+              <Button
+                ml="10px"
+                variant="outline"
+                size="lg"
+                borderColor={theme.color.accent}
+              >
+                Start A Demo
+              </Button>
+            </Link>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <Link to="/dashboard/home">
+              <Button
+                ml="10px"
+                variant="outline"
+                size="lg"
+                borderColor={theme.color.accent}
+              >
+                Dashboard
+              </Button>
+            </Link>
+          </ShowOnLogin>
         </ActionList>
       </NavBar>
     </NavBarContainer>
