@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import { IconPlus } from "@tabler/icons";
+import { IconDownload, IconPlus } from "@tabler/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,6 +12,20 @@ import { useRedirectLoggedOut } from "../../hooks/useRedirect";
 import { fetchAllSupplier, RESET } from "../../redux/feature/supplierSlice";
 import { theme } from "../../styles/globalTheme.style";
 import Layout from "../Layouts/Layout";
+import { CSVLink } from "react-csv";
+
+// for csv header
+const headers = [
+  { label: "Supplier ID", key: "_id" },
+  { label: "Supplier Name", key: "name" },
+  { label: "Street Address", key: "street" },
+  { label: "City", key: "city" },
+  { label: "State", key: "state" },
+  { label: "Country", key: "country" },
+  { label: "Postal Code", key: "postalCode" },
+  { label: "Phone Number", key: "phone" },
+  { label: "Fax Number", key: "fax" },
+];
 
 const SupplierScreen = () => {
   const dispatch = useDispatch();
@@ -34,16 +48,44 @@ const SupplierScreen = () => {
     <Layout>
       <DashboardTabHeader
         addElement={
-          <CustomModal heading="Supplier Details" element={<CreateSupplier />}>
-            <Button
-              leftIcon={<IconPlus />}
-              bg={theme.color.accent}
-              color={theme.color.text}
-              marginRight="10px"
+          <>
+            <CSVLink
+              data={
+                supplierList
+                  ? supplierList.map((_) => ({
+                      _id: _._id,
+                      name: _.name,
+                      street: _.street,
+                      city: _.city,
+                      state: _.state,
+                      country: _.country,
+                      postalCode: _.postalCode,
+                      phone: _.phone,
+                      fax: _.fax,
+                    }))
+                  : []
+              }
+              headers={headers}
+              filename="supplier-list.csv"
             >
-              Add Supplier
-            </Button>
-          </CustomModal>
+              <Button leftIcon={<IconDownload />} mr="10px">
+                Export CSV
+              </Button>
+            </CSVLink>
+            <CustomModal
+              heading="Supplier Details"
+              element={<CreateSupplier />}
+            >
+              <Button
+                leftIcon={<IconPlus />}
+                bg={theme.color.accent}
+                color={theme.color.text}
+                marginRight="10px"
+              >
+                Add Supplier
+              </Button>
+            </CustomModal>
+          </>
         }
       />
       {isLoading && <CustomLoaderSkeleton />}

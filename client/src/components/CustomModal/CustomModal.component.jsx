@@ -11,13 +11,13 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const CustomModal = ({ children, element, heading }) => {
+const CustomModal = ({ children, element, heading, size = "sm" }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       {children && <Box onClick={() => onOpen()}>{children}</Box>}
-      <Drawer onClose={onClose} isOpen={isOpen} size="sm">
+      <Drawer onClose={onClose} isOpen={isOpen} size={size}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />

@@ -21,6 +21,7 @@ import { AnimatePresence } from "framer-motion";
 import LoginScreen from "./screens/Authentication/LoginScreen.screen";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateSupplier from "./screens/DashBoard/UpdateSupplier.screen";
+import Document from "./screens/DashBoard/Document.screen";
 
 // save cookies we get from back
 axios.defaults.withCredentials = true;
@@ -63,6 +64,8 @@ function App() {
               path="/dashboard/supplier/:supplierId"
               element={<UpdateSupplier />}
             />
+            {/* document routes */}
+            <Route path="/dashboard/documents" element={<Document />} />
             {/* 404 page */}
             <Route path="*" element={<PageNotFound />} />
           </Routes>
