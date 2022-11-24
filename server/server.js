@@ -2,13 +2,14 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
+import cors from "cors";
 import connectDB from "./db.js";
 import { errorHandler } from "./utils/errorHandler.js";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
 import supplierRouter from "./routes/supplier.routes.js";
 import productRouter from "./routes/product.routes.js";
-import cors from "cors";
+import DocRouter from "./routes/document.routes.js";
 
 const PORT = process.env.PORT || 8080;
 dotenv.config();
@@ -33,6 +34,7 @@ app.get("/api/v1", (req, res) => {
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/supplier", supplierRouter);
 app.use("/api/v1/product", productRouter);
+app.use("/api/v1/document", DocRouter);
 // error middleware
 app.use(errorHandler);
 

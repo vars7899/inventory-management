@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import IconButton from "../Button/IconButton";
+import { useEffect } from "react";
 import {
   DashboardHeaderContainer,
   DashboardHeaderLeft,
@@ -13,8 +12,9 @@ import {
   IconBell,
   IconChevronDown,
   IconMail,
+  IconMenu2,
 } from "@tabler/icons";
-import { Box, Button, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Text, VStack, IconButton } from "@chakra-ui/react";
 import { theme } from "../../styles/globalTheme.style";
 import { getDayName, toMonthName } from "../../functions/monthName";
 import CustomModal from "../CustomModal/CustomModal.component";
@@ -22,6 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser, RESET } from "../../redux/feature/authSlice";
 import { toast } from "react-toastify";
+import { SET_SIDE_BAR_MINI } from "../../redux/feature/appSlice";
 
 const DashboardHeader = () => {
   const navigate = useNavigate();
@@ -38,9 +39,10 @@ const DashboardHeader = () => {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess && !isLoggedIn) {
-      navigate("/");
-    }
+    // TODO check this
+    // if (isSuccess && !isLoggedIn) {
+    //   navigate("/");
+    // }
     dispatch(RESET());
   }, [dispatch, isError, isSuccess, navigate]);
 
@@ -52,10 +54,25 @@ const DashboardHeader = () => {
 
   return (
     <DashboardHeaderContainer>
-      <DashboardHeaderLeft>
-        <p>{day_name}</p>
-        <p>{date_string}</p>
-      </DashboardHeaderLeft>
+      <Flex alignItems="center">
+        {
+          <IconButton
+            icon={<IconMenu2 color={theme.color.accent} size="30px" />}
+            variant="outline"
+            borderColor={theme.color.grey}
+            onClick={() => dispatch(SET_SIDE_BAR_MINI())}
+          />
+        }
+        <Flex flexDirection="column" ml="20px">
+          <Text fontSize="xl" fontWeight="bold" color={theme.color.text}>
+            {day_name}
+          </Text>
+          <Text fontSize="sm" fontWeight="bold" color={theme.color.grey}>
+            {date_string}
+          </Text>
+        </Flex>
+      </Flex>
+
       <DashboardHeaderRight>
         <IconButton
           children={

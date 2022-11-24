@@ -5,31 +5,30 @@ import { motion } from "framer-motion";
 import { IconFile } from "@tabler/icons";
 import moment from "moment";
 
-// TODO: remove the default imports
-const DocumentFileCard = ({
-  givenHeader = "Not Available",
-  givenDate = "2022-11-21T02:46:20.071+00:00",
-}) => {
+const DocumentFileCard = ({ givenHeader, givenDate }) => {
   return (
     <Box
       border={`1px solid ${theme.color.grey3}`}
       padding="20px"
       borderRadius="10px"
       display="flex"
-      justifyContent="center"
+      justifyContent="flex-start"
       maxW="350px"
       as={motion.div}
       variants={stagger.staggerChildren}
     >
-      <Flex>
-        <Flex justifyContent="center" marginLeft="-50px">
+      <Flex justifyContent="flex-start">
+        <Flex justifyContent="center">
           <IconFile size="100px" strokeWidth="0.25px" />
         </Flex>
         <Flex flexDir="column" ml="10px">
           <Text fontSize="xl" fontWeight="bold">
-            {givenHeader}
+            {givenHeader.substring(0, 20)}
+            {givenHeader.length > 20 && "..."}
           </Text>
-          <Text fontSize="xs">Created: {moment(givenDate).fromNow()}</Text>
+          <Text fontSize="xs">
+            Last Modified: {moment(givenDate).fromNow()}
+          </Text>
         </Flex>
       </Flex>
     </Box>

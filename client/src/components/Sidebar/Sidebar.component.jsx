@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   SidebarStyleContainer,
   BrandLogo,
@@ -11,13 +10,13 @@ import {
 import { GiArtificialHive } from "react-icons/gi";
 import SelectIcon from "../../functions/selectIcon";
 import { theme } from "../../styles/globalTheme.style";
-import { Link, useMatch, useLocation } from "react-router-dom";
-import { Flex, IconButton, Spacer, Text, Box } from "@chakra-ui/react";
-import { IconX } from "@tabler/icons";
+import { Link, useLocation } from "react-router-dom";
+import { Flex, Text, Box } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const current = useLocation().pathname;
-  const [miniSidebar, setMiniSidebar] = useState(true);
+  const { isSideBarMini } = useSelector((state) => state.app);
 
   const options = [
     { name: "dashboard", path: "/dashboard/home" },
@@ -45,11 +44,10 @@ const Sidebar = () => {
                 <GiArtificialHive
                   size="45px"
                   color="red"
-                  onClick={() => setMiniSidebar(false)}
                   style={{ cursor: "pointer" }}
                 />
               </Box>
-              {!miniSidebar && (
+              {!isSideBarMini && (
                 <Flex w="250px">
                   <Text
                     ml="10px"
@@ -63,18 +61,6 @@ const Sidebar = () => {
                   >
                     vision inventory management
                   </Text>
-                  <Spacer />
-                  <IconButton
-                    variant="unstyled"
-                    icon={
-                      <IconX
-                        color={theme.color.accent}
-                        size="20px"
-                        strokeWidth="2px"
-                      />
-                    }
-                    onClick={() => setMiniSidebar(true)}
-                  />
                 </Flex>
               )}
             </Flex>
@@ -93,7 +79,6 @@ const Sidebar = () => {
                   initial={current === item.path ? "visible" : "hidden"}
                   animate={current === item.path ? "visible" : "hidden"}
                   whileTap={{ scale: 0.99, background: theme.color.accent2 }}
-                  onClick={() => setCurrentTab(item.name)}
                 >
                   {
                     <SelectIcon
@@ -101,7 +86,7 @@ const Sidebar = () => {
                       isActive={current === item.path}
                     />
                   }
-                  {!miniSidebar && <p>{item.name}</p>}
+                  {!isSideBarMini && <p>{item.name}</p>}
                 </SidebarOptionItem>
               </Link>
             ))}
@@ -124,7 +109,6 @@ const Sidebar = () => {
                     scale: 0.99,
                     background: theme.color.accent2,
                   }}
-                  onClick={() => setCurrentTab(item)}
                 >
                   {
                     <SelectIcon
@@ -132,7 +116,7 @@ const Sidebar = () => {
                       isActive={current === item.path}
                     />
                   }
-                  {!miniSidebar && <p>{item.name}</p>}
+                  {!isSideBarMini && <p>{item.name}</p>}
                 </SidebarOptionItem>
               </Link>
             ))}

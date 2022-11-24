@@ -15,7 +15,7 @@ export const useRedirectLoggedOut = (path, to) => {
         // toast.info("Session expired, Please Sign in to continue");
         return navigate(path);
       }
-      dispatch(RESET());
+      await dispatch(RESET());
       navigate(to);
     }
     check();

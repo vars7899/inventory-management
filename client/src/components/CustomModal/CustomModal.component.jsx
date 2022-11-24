@@ -14,6 +14,11 @@ import React from "react";
 const CustomModal = ({ children, element, heading, size = "sm" }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Send onClose to the children
+  const elementWithExtraProp = React.Children.map(element, (child) =>
+    React.cloneElement(child, { onClose: onClose })
+  );
+
   return (
     <>
       {children && <Box onClick={() => onOpen()}>{children}</Box>}
@@ -23,7 +28,7 @@ const CustomModal = ({ children, element, heading, size = "sm" }) => {
           <DrawerCloseButton />
           <DrawerHeader>{heading}</DrawerHeader>
           <Divider />
-          <DrawerBody>{element}</DrawerBody>
+          <DrawerBody>{elementWithExtraProp}</DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
