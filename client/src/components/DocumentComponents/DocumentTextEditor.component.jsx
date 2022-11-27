@@ -70,7 +70,7 @@ const DocumentTextEditor = ({ docData = null, type, onClose }) => {
       toast.success(message);
     }
     dispatch(DOCS_RESET());
-  });
+  }, []);
   return (
     <Flex flexDir="column" h="100%">
       <InputGroup mb="20px">

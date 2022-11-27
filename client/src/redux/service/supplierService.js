@@ -4,6 +4,10 @@ const getAllSupplier = async () => {
   const response = await axios.get("/api/v1/supplier");
   return response.data;
 };
+const getQuerySupplier = async (query) => {
+  const response = await axios.get(`/api/v1/supplier/q?search=${query}`);
+  return response.data;
+};
 const createNewSupplier = async (supplierData) => {
   const response = await axios.post("/api/v1/supplier", supplierData);
   return response.data;
@@ -31,5 +35,6 @@ const supplierService = {
   getSupplier,
   deleteSupplier,
   updateSupplier,
+  getQuerySupplier,
 };
 export default supplierService;

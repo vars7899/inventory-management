@@ -4,6 +4,7 @@ import {
   deleteSupplier,
   getAllSupplier,
   getSupplierById,
+  getSupplierByQuery,
   updateSupplierDetails,
 } from "../controllers/supplier.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
@@ -13,6 +14,7 @@ supplierRouter
   .route("/")
   .post(auth, createNewSupplier)
   .get(auth, getAllSupplier);
+supplierRouter.route("/q").get(auth, getSupplierByQuery);
 supplierRouter
   .route("/:id")
   .patch(auth, updateSupplierDetails)

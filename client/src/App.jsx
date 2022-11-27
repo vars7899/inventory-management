@@ -22,6 +22,7 @@ import LoginScreen from "./screens/Authentication/LoginScreen.screen";
 import "react-toastify/dist/ReactToastify.css";
 import UpdateSupplier from "./screens/DashBoard/UpdateSupplier.screen";
 import Document from "./screens/DashBoard/Document.screen";
+import ProductOverview from "./screens/DashBoard/ProductOverview.screen";
 
 // save cookies we get from back
 axios.defaults.withCredentials = true;
@@ -54,6 +55,10 @@ function App() {
             {/* Product routes */}
             <Route path="/dashboard/product" element={<Product />} />
             <Route path="/dashboard/product/new" element={<NewProduct />} />
+            <Route
+              path="/dashboard/product/details"
+              element={<ProductOverview />}
+            />
             <Route
               path="/dashboard/product/:productId"
               element={<UpdateProduct />}

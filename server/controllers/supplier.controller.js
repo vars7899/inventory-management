@@ -1,5 +1,6 @@
 import ExpressAsyncHandler from "express-async-handler";
 import Supplier from "../models/supplier.model.js";
+import User from "../models/user.model.js";
 
 // @desc		create new supplier
 // @route		/api/supplier
@@ -223,5 +224,52 @@ export const getSupplierById = ExpressAsyncHandler(async (req, res) => {
     throw new Error(
       "Server was not able to process request (User registration)"
     );
+  }
+});
+
+// @desc			get all the supplier matching the query
+// @route			GET /api/v1/supplier?search=""
+// @access		private
+export const getSupplierByQuery = ExpressAsyncHandler(async (req, res) => {
+  try {
+    if (!req.user || !(await User.findById(req.user._id))) {
+      res.status(401);
+      throw new Error("Un-Authorized or unknown user");
+    }
+    // look for the following keyword
+    let keyword = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+            { website: { $regex: req.query.search, $options: "i" } },
+            { street: { $regex: req.query.search, $options: "i" } },
+            { city: { $regex: req.query.search, $options: "i" } },
+            { state: { $regex: req.query.search, $options: "i" } },
+            { country: { $regex: req.query.search, $options: "i" } },
+            { postalCode: { $regex: req.query.search, $options: "i" } },
+            { phone: { $regex: req.query.search, $options: "i" } },
+            { fax: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+    // find all the supplier with the query, created by the user
+    const supplierExist = await Supplier.find(keyword).find({
+      clientName: { $eq: req.user._id },
+    });
+    // if (supplierExist.length === 0) {
+    //   return res.status(200).json({
+    //     success: true,
+    //     message: "No supplier exist",
+    //     supplier: [],
+    //   });
+    // }
+    res.status(200).json({
+      success: true,
+      message: "List of supplier fetched successfully",
+      supplier: supplierExist,
+    });
+  } catch (err) {
+    throw new Error(err);
   }
 });

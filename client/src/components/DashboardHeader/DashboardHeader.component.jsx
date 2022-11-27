@@ -75,14 +75,13 @@ const DashboardHeader = () => {
 
       <DashboardHeaderRight>
         <IconButton
-          children={
-            <IconBell size={30} stroke={1.5} color={theme.color.grey} />
-          }
+          icon={<IconBell size={30} stroke={1.5} color={theme.color.text} />}
+          variant="unstyled"
+          mr="20px"
         />
         <IconButton
-          children={
-            <IconMail size={30} stroke={1.5} color={theme.color.grey} />
-          }
+          icon={<IconMail size={30} stroke={1.5} color={theme.color.text} />}
+          variant="unstyled"
         />
         <UserAvatarOption>
           <UserAvatar />
@@ -110,13 +109,14 @@ const DashboardHeader = () => {
           </UserNameOption>
         </UserAvatarOption>
         <IconButton
-          children={
+          icon={
             <IconAlertTriangle
               size={30}
               stroke={1.5}
-              color={theme.color.grey}
+              color={theme.color.text}
             />
           }
+          variant="unstyled"
         />
       </DashboardHeaderRight>
     </DashboardHeaderContainer>

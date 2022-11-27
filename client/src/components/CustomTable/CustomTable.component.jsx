@@ -21,6 +21,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { theme } from "../../styles/globalTheme.style";
 import CustomPopover from "../CustomPopover/CustomPopover.components";
 import CustomTableColumnSetting from "./CustomTableColumnSetting.component";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GET_SUPPLIER_BY_QUERY,
+  RESET,
+} from "../../redux/feature/supplierSlice";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const CustomTable = ({ given_data }) => {
   const navigate = useNavigate();
@@ -31,14 +38,10 @@ const CustomTable = ({ given_data }) => {
   const [tableCategory, setTableCategory] = useState(() =>
     headingList.slice(1, 9)
   );
+
   return (
-    <Box mt="10px">
+    <Box mt="-40px">
       <Flex mb="10px">
-        <Input
-          type="text"
-          placeholder="Search for Keywords"
-          w={{ base: "300px" }}
-        />
         <Spacer />
         <CustomPopover
           element={

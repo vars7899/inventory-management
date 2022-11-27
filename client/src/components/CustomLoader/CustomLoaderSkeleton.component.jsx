@@ -9,7 +9,7 @@ const CustomLoaderSkeleton = () => {
         {numberOfSkeleton.map((_, index) => (
           <Skeleton
             key={`skeleton-${index}`}
-            height={{ base: "30px", xl: "50px" }}
+            height={{ base: "30px", xl: "73px" }}
           />
         ))}
       </Stack>

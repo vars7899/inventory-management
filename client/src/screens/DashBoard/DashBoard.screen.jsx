@@ -11,11 +11,13 @@ import ActiveShipment from "../../components/HomeComponents/ActiveShipment.compo
 import { theme } from "../../styles/globalTheme.style";
 import Layout from "../Layouts/Layout";
 import { useRedirectLoggedOut } from "../../hooks/useRedirect";
+import DashboardTabHeader from "../../components/DashboardTabHeader/DashboardTabHeader.component";
 
 const DashBoard = () => {
   useRedirectLoggedOut("/login");
   return (
     <Layout>
+      <DashboardTabHeader />
       <Grid templateColumns="repeat(5,1fr)" p="20px" gridGap="10px">
         <StaticsCard
           givenCardHeader="Total Products"

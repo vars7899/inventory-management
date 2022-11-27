@@ -6,6 +6,10 @@ export const LayoutStyle = styled.div`
   max-width: 100vw;
   max-height: 100vh;
 `;
+export const LeftContainerStyle = styled.div`
+  position: sticky;
+  top: 0;
+`;
 export const RightContainerStyle = styled.div`
   display: flex;
   flex-direction: column;

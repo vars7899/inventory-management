@@ -13,12 +13,14 @@ const variants = {
   },
 };
 
-export const SidebarStyleContainer = styled.div`
+export const SidebarStyleContainer = styled(motion.div)`
   background-color: ${(props) => props.theme.color.dark};
-  /* width: 100%; */
-  min-height: 100vh;
+  height: 100vh;
   padding: 0px 10px;
   overflow: hidden;
+  position: sticky;
+  top: 0%;
+  z-index: 100;
 `;
 export const SidebarStyle = styled.div`
   height: 100%;

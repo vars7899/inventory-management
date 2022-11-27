@@ -72,6 +72,22 @@ export const GET_SUPPLIER = createAsyncThunk(
     }
   }
 );
+export const GET_SUPPLIER_BY_QUERY = createAsyncThunk(
+  "supplier/GET_SUPPLIER_BY_QUERY",
+  async (query, thunkAPI) => {
+    try {
+      return await supplierService.getQuerySupplier(query);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 export const UPDATE_SUPPLIER = createAsyncThunk(
   "supplier/UPDATE_SUPPLIER",
   async (supplier, thunkAPI) => {
@@ -187,6 +203,20 @@ const supplierSlice = createSlice({
         state.supplier = action.payload.supplier;
       })
       .addCase(GET_SUPPLIER.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(GET_SUPPLIER_BY_QUERY.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(GET_SUPPLIER_BY_QUERY.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload.message;
+        state.supplierList = action.payload.supplier;
+      })
+      .addCase(GET_SUPPLIER_BY_QUERY.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

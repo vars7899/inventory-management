@@ -8,17 +8,15 @@ import {
   BreadcrumbLink,
   Flex,
   Spacer,
+  IconButton,
 } from "@chakra-ui/react";
-import { IconChevronRight } from "@tabler/icons";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { theme } from "../../styles/globalTheme.style";
 
-const DashboardTabHeader = ({
-  given_heading,
-  given_sub_heading,
-  addElement,
-}) => {
+const DashboardTabHeader = ({ addElement, backTo }) => {
+  const navigate = useNavigate();
   const current = useLocation();
   const [path, setPath] = useState([]);
 
@@ -33,6 +31,15 @@ const DashboardTabHeader = ({
   return (
     <Box>
       <Flex alignItems="center" marginBottom="20px">
+        {backTo && (
+          <IconButton
+            icon={<IconChevronLeft />}
+            onClick={() => navigate(backTo)}
+            marginRight="20px"
+            bg={theme.color.accent}
+            color={theme.color.text}
+          />
+        )}
         <VStack display="flex" alignItems="center">
           <Breadcrumb
             separator={<IconChevronRight strokeWidth="1px" size="15px" />}

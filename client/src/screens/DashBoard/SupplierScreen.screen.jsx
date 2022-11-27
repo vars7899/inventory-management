@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import { IconDownload, IconPlus } from "@tabler/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,11 @@ import CustomTable from "../../components/CustomTable/CustomTable.component";
 import DashboardTabHeader from "../../components/DashboardTabHeader/DashboardTabHeader.component";
 import CreateSupplier from "../../components/Supplier/CreateSupplier.component";
 import { useRedirectLoggedOut } from "../../hooks/useRedirect";
-import { fetchAllSupplier, RESET } from "../../redux/feature/supplierSlice";
+import {
+  fetchAllSupplier,
+  GET_SUPPLIER_BY_QUERY,
+  RESET,
+} from "../../redux/feature/supplierSlice";
 import { theme } from "../../styles/globalTheme.style";
 import Layout from "../Layouts/Layout";
 import { CSVLink } from "react-csv";
@@ -43,6 +47,10 @@ const SupplierScreen = () => {
     }
     dispatch(RESET());
   }, []);
+  // handle query
+  function handleQuery(value) {
+    dispatch(GET_SUPPLIER_BY_QUERY(value));
+  }
 
   return (
     <Layout>
@@ -88,8 +96,35 @@ const SupplierScreen = () => {
           </>
         }
       />
-      {isLoading && <CustomLoaderSkeleton />}
-      {supplierList && <CustomTable given_data={supplierList} />}
+      <Input
+        mt="20px"
+        type="text"
+        placeholder="Search for Keywords"
+        w={{ base: "300px" }}
+        onChange={(e) => handleQuery(e.target.value)}
+      />
+      {isLoading && (
+        <Box mt="20px">
+          <CustomLoaderSkeleton />
+        </Box>
+      )}
+      {supplierList && supplierList.length !== 0 && !isLoading && (
+        <CustomTable given_data={supplierList} />
+      )}
+      {supplierList && supplierList.length === 0 && (
+        <Flex
+          mt="20px"
+          w="100%"
+          border={`1px solid ${theme.color.grey3}`}
+          color={theme.color.grey3}
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          borderRadius="10px"
+        >
+          <Text>No Record available</Text>
+        </Flex>
+      )}
     </Layout>
   );
 };
